@@ -1,0 +1,16 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  .app-header {
+    height: 100px;
+    width: 100%;
+  }
+
+  .app-content {
+    width: 100%;
+    height: calc(100% - 100px);
+  }
+}
