@@ -1,0 +1,19 @@
+.sing-up-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  background-color: #fff;
+}
+
+.hospital-image {
+  width: 40%;
+}
+
+.auth-form {
+  width: 40%;
+  height: 80%;
+  background-color: #e2584b;
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
