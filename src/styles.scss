@@ -50,8 +50,8 @@ body { margin: 0; font-family: $font-family; }
 }
 
 .hospital-auth-image {
-  height: 75%;
-  width: auto;
+  height: auto;
+  width: 35%;
 }
 
 .auth-form {
@@ -62,4 +62,10 @@ body { margin: 0; font-family: $font-family; }
   border-radius: 30px;
   box-shadow: $box-shadow-primary;
   padding: 20px 40px;
+}
+
+@media (max-width: 1000px) {
+  .hospital-auth-image {
+    display: none;
+  }
 }

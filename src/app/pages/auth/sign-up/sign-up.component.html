@@ -6,6 +6,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Логин</mat-label>
         <input matInput formControlName="login" placeholder="Введите логин">
+        <mat-hint align="end">Длина: {{minFieldLength}}-{{maxFieldLength}}, допустимые символы a-z A-Z 0-9</mat-hint>
       </mat-form-field>
     </div>
     <div class="input-element">
@@ -16,6 +17,8 @@
           [attr.aria-pressed]="hide.password">
           <mat-icon>{{hide.password ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-hint align="end">
+          Длина: {{minFieldLength}}-{{maxFieldLength}}, пароль должен содержать: a-z или A-Z и 0-9 </mat-hint>
       </mat-form-field>
     </div>
     <div class="input-element">
@@ -26,6 +29,7 @@
           [attr.aria-pressed]="hide.doublePassword">
           <mat-icon>{{hide.doublePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-hint align="end">Пароли должны совпадать</mat-hint>
       </mat-form-field>
     </div>
     <button mat-raised-button class="form-button" (click)="onSubmit()" [disabled]="signUpForm?.invalid">

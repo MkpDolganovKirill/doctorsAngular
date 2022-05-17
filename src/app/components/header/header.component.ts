@@ -8,9 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   pageName: string = 'Неизвестная страница';
-  isButtonShow: boolean = false;
-
-  isShowHeaderButton: boolean = false;
+  ButtonShow: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -22,27 +20,28 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  sendAllert(): void {
+  logOut(): void {
     localStorage.clear();
+    this.router.navigateByUrl('/auth');
   }
 
   changeHeaderTitle(url: string): void {
-    let array: Array<string> = url.split('/');
-    switch (array[1]) {
+    const lastPathSegment = url.split('/').pop();
+    switch (lastPathSegment) {
       case 'main':
-        this.isButtonShow = true;
+        this.ButtonShow = true;
         this.pageName = 'Приемы';
         break;
       case 'auth':
-        this.isButtonShow = false;
-        if (array[2] === 'registration') {
-          this.pageName = 'Регистрация';
-        } else {
-          this.pageName = 'Авторизация';
-        }
+        this.ButtonShow = false;
+        this.pageName = 'Авторизация';
+        break;
+      case 'registration':
+        this.ButtonShow = false;
+        this.pageName = 'Регистрация';
         break;
       default:
-        this.isButtonShow = false;
+        this.ButtonShow = false;
         this.pageName = 'Неизвестная страница';
         break;
     }

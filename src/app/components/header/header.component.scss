@@ -51,3 +51,9 @@
 .mat-raised-button {
   background-color: $color-secondary  !important;
 }
+
+@media (max-width: 500px) {
+  .global-header {
+    display: none;
+  }
+}
