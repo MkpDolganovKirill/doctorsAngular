@@ -1,0 +1,17 @@
+@import 'src/styles-variables.scss';
+
+.mat-form-field-flex {
+  background-color: $color-primary !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $color-secondary;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.mat-form-field-infix {
+  font-size: 1.2rem;
+}

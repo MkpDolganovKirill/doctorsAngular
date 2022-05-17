@@ -34,15 +34,32 @@ $frontend-theme: mat.define-light-theme((
 @include mat.all-component-themes($frontend-theme);
 
 /* You can add global styles to this file, and also import other style files */
+@import 'src/styles-variables.scss';
+@import 'src/material-styles/inputs.scss';
+@import 'src/material-styles/buttons.scss';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: $font-family; }
 
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+  background-color: $color-primary;
+}
 
-// app-header {
-//   custom-button {
-//     button {
-//       background-color: red !important;
-//     }
-//   }
-// }
+.hospital-auth-image {
+  height: 75%;
+  width: auto;
+}
+
+.auth-form {
+  max-width: 500px;
+  width: 100%;
+  height: 80%;
+  background-color: $color-secondary;
+  border-radius: 30px;
+  box-shadow: $box-shadow-primary;
+  padding: 20px 40px;
+}

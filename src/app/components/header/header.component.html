@@ -5,8 +5,8 @@
   </div>
   <button 
     class="header-button"
-    *ngIf="false"
-    mat-raised-button color="warn"
+    *ngIf="isShowHeaderButton"
+    mat-raised-button
     (click)="sendAllert()"
     >
     Выход

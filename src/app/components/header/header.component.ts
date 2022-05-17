@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   pageName: string = 'Неизвестная страница';
-  @Input() isShow: boolean = false;
+  isButtonShow: boolean = false;
 
   isShowHeaderButton: boolean = false;
 
@@ -30,12 +30,19 @@ export class HeaderComponent implements OnInit {
     let array: Array<string> = url.split('/');
     switch (array[1]) {
       case 'main':
+        this.isButtonShow = true;
         this.pageName = 'Приемы';
         break;
       case 'auth':
-        this.pageName = 'Авторизация';
+        this.isButtonShow = false;
+        if (array[2] === 'registration') {
+          this.pageName = 'Регистрация';
+        } else {
+          this.pageName = 'Авторизация';
+        }
         break;
       default:
+        this.isButtonShow = false;
         this.pageName = 'Неизвестная страница';
         break;
     }

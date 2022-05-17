@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-/* modules */
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-/* components */
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormHelperService } from './services/form-helper.service';
+import { MaterialModule } from './material/material/material.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -17,11 +16,10 @@ import { HeaderComponent } from './components/header/header.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatSortModule,
+    ReactiveFormsModule,
+    MaterialModule,
   ],
-  providers: [],
+  providers: [FormHelperService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
