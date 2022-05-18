@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,12 +10,28 @@ import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormHelperService } from './services/form-helper.service';
 import { MaterialModule } from './material/material/material.module';
-import { HttpHelperService } from './services/http-helper.service';
+import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SnackbarComponent } from './material/custom-components/snackbar/snackbar.component';
+import { CreateOrderComponent } from './pages/main/create-order/create-order.component';
+import { SortOrdersComponent } from './pages/main/sort-orders/sort-orders.component';
+import { ShowOrdersComponent } from './pages/main/show-orders/show-orders.component';
+import { NotExistOrdersComponent } from './pages/main/not-exist-orders/not-exist-orders.component';
+import { MainComponent } from './pages/main/main.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [
+    CreateOrderComponent,
+    MainComponent,
+    AppComponent,
+    HeaderComponent,
+    SnackbarComponent,
+    SortOrdersComponent,
+    ShowOrdersComponent,
+    NotExistOrdersComponent,
+  ],
   imports: [
+    CommonModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
@@ -22,7 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     MaterialModule,
   ],
-  providers: [FormHelperService, HttpHelperService],
+  providers: [FormHelperService, HttpService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

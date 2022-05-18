@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormHelperService } from 'src/app/services/form-helper.service';
-import { HttpHelperService } from 'src/app/services/http-helper.service';
+import { HttpService } from 'src/app/services/http.service';
 import { MainService } from 'src/app/services/main.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { MainService } from 'src/app/services/main.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
   public hide = {
     password: true,
     doublePassword: true,
@@ -21,20 +21,14 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private newSignUpForm: FormHelperService,
-    private http: HttpHelperService,
-    private mainService: MainService,
+    private http: HttpService,
+    public mainService: MainService,
     private router: Router,
   ) {
     this.signUpForm = this.newSignUpForm.createSignUpForm(this.minFieldLength, this.maxFieldLength);
   }
-
-  ngOnInit(): void {}
-
   onSubmit() {
-    console.log(this.signUpForm);
-    console.log(this.signUpForm.value);
-    const result = this.http.createUser(this.signUpForm.value);
-    console.log(result);
+    this.http.createUser(this.signUpForm.value);
   }
 
   redirectOnRegister() {

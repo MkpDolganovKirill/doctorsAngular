@@ -4,25 +4,33 @@ import { catchError, finalize, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { IAuth, IUser } from '../interfaces/user.interface';
 import { environment } from 'src/environments/environment';
+import { MainService } from './main.service';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HttpHelperService {
+export class HttpService {
   public isLoading = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private mainServise: MainService,
+    private errorService: ErrorService,
+  ) {}
 
   public createUser(body: IUser) {
+    this.mainServise.isLoading.next(true);
     return this.http
       .post<IAuth>(`${environment.requestLink}createNewUser`, body)
       .pipe(
         catchError((err) => {
-          console.log('error', { ...err });
+          this.errorService.errorHandlerRequests(err);
           return of(null);
         }),
         finalize(() => {
-          this.isLoading = false;
+          this.mainServise.isLoading.next(false);
         }),
       )
       .subscribe((result: IAuth | null) => {
@@ -36,15 +44,16 @@ export class HttpHelperService {
   }
 
   public authenticateUser(body: IUser) {
+    this.mainServise.isLoading.next(true);
     return this.http
       .post<IAuth>(`${environment.requestLink}authorizationUser`, body)
       .pipe(
         catchError((err) => {
-          console.log('error', { ...err });
+          this.errorService.errorHandlerRequests(err);
           return of(null);
         }),
         finalize(() => {
-          this.isLoading = false;
+          this.mainServise.isLoading.next(false);
         }),
       )
       .subscribe((result: IAuth | null) => {

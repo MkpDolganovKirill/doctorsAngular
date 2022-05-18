@@ -32,12 +32,12 @@
         <mat-hint align="end">Пароли должны совпадать</mat-hint>
       </mat-form-field>
     </div>
-    <button mat-raised-button class="form-button" (click)="onSubmit()" [disabled]="signUpForm?.invalid">
+    <button mat-raised-button class="form-button" (click)="onSubmit()" [disabled]="signUpForm?.invalid || (mainService.isLoading |async)">
       Зарегистрироваться
     </button>
     <div class="offer-container">
       <p class="form-offer-text">У вас уже есть аккаунт?</p>
-      <button mat-button class="form-button-offer" (click)="redirectOnRegister()">
+      <button mat-button class="form-button-offer" [disabled]="mainService.isLoading | async" (click)="redirectOnRegister()">
         Войти
       </button>
     </div>

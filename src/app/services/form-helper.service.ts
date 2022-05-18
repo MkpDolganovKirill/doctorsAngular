@@ -28,6 +28,19 @@ export class FormHelperService {
     );
   }
 
+  validateDoublePassword(form?: AbstractControl): { invalid: any } | null {
+    const doublePasswordErrors = form?.get('doublePassword')?.errors;
+    if (form?.get('password')?.value !== form?.get('doublePassword')?.value) {
+      form
+        ?.get('doublePassword')
+        ?.setErrors({ ...doublePasswordErrors, invalidDoublePassword: true });
+      return { invalid: true };
+    } else {
+      form?.get('doublePassword')?.setErrors(null);
+    }
+    return null;
+  }
+
   createSingInForm(minFieldLength: number, maxFieldLength: number): FormGroup {
     return this.formBuilder.group({
       login: new FormControl('', [
@@ -43,16 +56,12 @@ export class FormHelperService {
     });
   }
 
-  validateDoublePassword(form?: AbstractControl): { invalid: any } | null {
-    const doublePasswordErrors = form?.get('doublePassword')?.errors;
-    if (form?.get('password')?.value !== form?.get('doublePassword')?.value) {
-      form
-        ?.get('doublePassword')
-        ?.setErrors({ ...doublePasswordErrors, invalidDoublePassword: true });
-      return { invalid: true };
-    } else {
-      form?.get('doublePassword')?.setErrors(null);
-    }
-    return null;
+  creatingOrderForm() {
+    return this.formBuilder.group({
+      name: new FormControl(''),
+      // doctors: this.formBuilder.array([this.formBuilder.control('')]),
+      date: new FormControl(''),
+      complaints: new FormControl(''),
+    });
   }
 }

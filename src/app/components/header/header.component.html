@@ -1,14 +1,16 @@
 <header class="global-header">
   <div class="header-start">
-    <img class="header-image" src="/assets/icons/medicine.svg"/>
+    <img class="header-image" src="/assets/icons/medicine.svg" />
     <h1 class="header-title">{{pageName}}</h1>
   </div>
-  <button 
-    class="header-button"
-    *ngIf="ButtonShow"
-    mat-raised-button
-    (click)="logOut()"
-    >
+  <button class="header-button" *ngIf="ButtonShow" mat-raised-button (click)="logOut()">
     Выход
-    </button>
+  </button>
 </header>
+<mat-progress-bar 
+  *ngIf="mainService.isLoading | async"
+  class="loader"
+  color="#3aade1"
+  mode="indeterminate"
+>
+</mat-progress-bar>

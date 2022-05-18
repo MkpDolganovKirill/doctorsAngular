@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormHelperService } from 'src/app/services/form-helper.service';
-import { HttpHelperService } from 'src/app/services/http-helper.service';
+import { HttpService } from 'src/app/services/http.service';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'sign-in',
@@ -17,16 +18,16 @@ export class SignInComponent {
 
   constructor(
     private newSignInForm: FormHelperService,
-    private http: HttpHelperService,
+    private http: HttpService,
     private router: Router,
+    public mainService: MainService,
   ) {
     this.signInForm = this.newSignInForm.createSingInForm(this.minFieldLength, this.maxFieldLength);
   }
 
   onSubmit() {
     console.log(this.signInForm.value);
-    const result = this.http.authenticateUser(this.signInForm.value);
-    console.log(result);
+    this.http.authenticateUser(this.signInForm.value);
   }
 
   redirectOnRegister() {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationEnd, Router } from '@angular/router';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +9,24 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  pageName: string = 'Неизвестная страница';
-  ButtonShow: boolean = false;
+  public pageName: string = 'Неизвестная страница';
+  public ButtonShow: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    public mainService: MainService,
+    private snackBar: MatSnackBar,
+  ) {}
 
   public ngOnInit(): void {
     this.router.events.subscribe((routerEvent: any) => {
       if (routerEvent instanceof NavigationEnd) {
         this.changeHeaderTitle(routerEvent.url);
+      }
+    });
+    this.mainService.showSnackBar.subscribe((res) => {
+      if (res) {
+        this.snackBar.open(res.message, res.action, { ...res.optional });
       }
     });
   }

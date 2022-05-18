@@ -25,12 +25,12 @@
       mat-raised-button
       class="form-button"
       (click)="onSubmit()"
-      [disabled]="signInForm?.invalid"
+      [disabled]="signInForm?.invalid || (mainService.isLoading | async)"
     >
       Войти
     </button>
     <p class="form-offer-text">У вас еще нет аккаунта?</p>
-    <button mat-button class="form-button-offer" (click)="redirectOnRegister()">
+    <button mat-button class="form-button-offer" [disabled]="mainService.isLoading | async" (click)="redirectOnRegister()">
       Зарегистрироваться
     </button>
   </form>
