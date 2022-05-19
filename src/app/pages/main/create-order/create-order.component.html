@@ -1,26 +1,35 @@
-<form [formGroup]="creatingForm">
-  <mat-form-field appearance="fill">
+<form [formGroup]="creatingForm" class="create-form">
+  <mat-form-field class="outlined-input name" appearance="outline">
     <mat-label>Имя</mat-label>
     <input matInput formControlName="name" placeholder="Имя пациента">
   </mat-form-field>
-  <!-- <mat-form-field appearance="fill">
+  <mat-form-field class="outlined-input doctor" appearance="outline">
     <mat-label>Доктор</mat-label>
-    <mat-select formControlName="doctors">
-      <mat-option>--</mat-option>
-      <mat-option *ngFor="let doctor of doctors" [value]="doctor">
-        {{doctor.viewValue}}
+    <mat-select #selectDoctor formControlName="doctors"  >
+      <mat-option value="" >--</mat-option>
+      <mat-option *ngFor="let doctor of (mainService?.doctorsList | async)" [value]="doctor.id">
+        {{doctor.fullname}}
       </mat-option>
     </mat-select>
-  </mat-form-field> -->
-  <!-- <mat-form-field appearance="fill">
-    <mat-label>Choose a date</mat-label>
-    <input matInput formControlName="date" [matDatepicker]="picker">
-    <mat-hint>MM/DD/YYYY</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="outlined-input date" appearance="outline">
+    <mat-label>Дата приема</mat-label>
+    <input
+      matInput formControlName="date"
+      [min]="dateLimit.min"
+      [max]="dateLimit.max"
+      [matDatepicker]="picker" >
+    <mat-hint>мм/дд/гг</mat-hint>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker></mat-datepicker>
-  </mat-form-field> -->
-  <mat-form-field appearance="fill">
+    <mat-datepicker #picker [opened]="isDatePickerOpen"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="outlined-input complaints" appearance="outline">
     <mat-label>Жалобы</mat-label>
     <input matInput formControlName="complaints" placeholder="Введите жалобы">
   </mat-form-field>
+  <div class="creating-button">
+    <button (click)="onSubmit()" [disabled]="creatingForm?.invalid || (mainService.isLoading |async)" mat-raised-button>
+      Отправить
+    </button>
+  </div>
 </form>

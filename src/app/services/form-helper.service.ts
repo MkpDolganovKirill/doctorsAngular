@@ -58,10 +58,10 @@ export class FormHelperService {
 
   creatingOrderForm() {
     return this.formBuilder.group({
-      name: new FormControl(''),
-      // doctors: this.formBuilder.array([this.formBuilder.control('')]),
-      date: new FormControl(''),
-      complaints: new FormControl(''),
+      name: new FormControl('', Validators.required),
+      doctors: new FormControl('', Validators.required),
+      date: new FormControl('', Validators.required),
+      complaints: new FormControl('', Validators.required),
     });
   }
 }

@@ -12,7 +12,6 @@ import { FormHelperService } from './services/form-helper.service';
 import { MaterialModule } from './material/material/material.module';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SnackbarComponent } from './material/custom-components/snackbar/snackbar.component';
 import { CreateOrderComponent } from './pages/main/create-order/create-order.component';
 import { SortOrdersComponent } from './pages/main/sort-orders/sort-orders.component';
 import { ShowOrdersComponent } from './pages/main/show-orders/show-orders.component';
@@ -25,7 +24,6 @@ import { MainComponent } from './pages/main/main.component';
     MainComponent,
     AppComponent,
     HeaderComponent,
-    SnackbarComponent,
     SortOrdersComponent,
     ShowOrdersComponent,
     NotExistOrdersComponent,
