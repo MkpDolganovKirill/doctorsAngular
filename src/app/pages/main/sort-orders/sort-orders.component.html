@@ -1,1 +1,37 @@
-<p>sort-orders works!</p>
+<form [formGroup]="creatingForm" class="create-form">
+  <mat-form-field class="outlined-input doctor" appearance="outline">
+    <mat-label>Доктор</mat-label>
+    <mat-select #selectDoctor formControlName="doctors">
+      <mat-option value="">--</mat-option>
+      <mat-option *ngFor="let method of sortMethodOptions" [value]="method.id">
+        {{method.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="outlined-input doctor" appearance="outline">
+    <mat-label>Доктор</mat-label>
+    <mat-select #selectDoctor formControlName="doctors">
+      <mat-option value="">--</mat-option>
+      <mat-option *ngFor="let type of sortTypeOptions" [value]="type.id">
+        {{type.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="outlined-input date" appearance="outline">
+    <mat-label>Дата приема</mat-label>
+    <input matInput formControlName="date" [min]="dateLimit.min" [max]="dateLimit.max" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker [opened]="isDatePickerOpen"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="outlined-input date" appearance="outline">
+    <mat-label>Дата приема</mat-label>
+    <input matInput formControlName="date" [min]="dateLimit.min" [max]="dateLimit.max" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker [opened]="isDatePickerOpen"></mat-datepicker>
+  </mat-form-field>
+  <div class="creating-button">
+    <!-- <button (click)="onSubmit()"  mat-raised-button>
+      Отправить
+    </button> -->
+  </div>
+</form>

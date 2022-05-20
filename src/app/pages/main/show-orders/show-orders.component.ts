@@ -8,23 +8,19 @@ import { MainService } from 'src/app/services/main.service';
   styleUrls: ['./show-orders.component.scss'],
 })
 export class ShowOrdersComponent {
-  public nullOrNot: Array<IOrder> = [
-    {
-      id: 'string',
-      patient: 'string',
-      doctor: {
-        fullname: 'sdfklsdkfl',
-      },
-      ordersdate: 'string',
-      complaints: 'string',
-    },
+  displayedColumns: string[] = [
+    'demo-position',
+    'demo-name',
+    'demo-weight',
+    'demo-symbol',
+    'actions',
   ];
-  public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  public nullOrNot: Array<IOrder> = [];
   constructor(public mainService: MainService) {}
-
   public ngOnInit(): void {
+    console.log(this.mainService.ordersList.getValue().length);
     this.mainService.ordersList.subscribe((list) => {
       this.nullOrNot = list;
-    })
+    });
   }
 }

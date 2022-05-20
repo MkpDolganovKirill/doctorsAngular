@@ -1,0 +1,27 @@
+
+
+.container {
+  height: 75vh;
+  overflow: auto;
+  margin-top: 5px;
+  width: 100%;
+  .data-table {
+    width: 100%;
+  }
+}
+
+.action-buttons {
+  height: 30px;
+  width: 30px;
+  margin-left: 15px;
+}
+
+.action-header {
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  width: 100px;
+}
+
+.action-body {
+  padding: 0 !important;
+}

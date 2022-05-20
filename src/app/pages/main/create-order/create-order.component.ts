@@ -36,6 +36,5 @@ export class CreateOrderComponent {
 
   public onSubmit() {
     this.creatingForm.reset();
-    console.log(this.creatingForm);
   }
 }

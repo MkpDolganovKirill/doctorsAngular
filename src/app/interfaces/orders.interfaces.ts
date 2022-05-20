@@ -10,3 +10,9 @@ export interface IOrder {
   ordersdate: string;
   complaints: string;
 }
+export interface ISortMethod {
+  id: string;
+  value: string;
+  dateWith?: string;
+  dateFor?: string;
+}
