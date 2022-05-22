@@ -1,0 +1,39 @@
+@import 'src/styles-variables.scss';
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.input-element {
+  margin-bottom: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-title {
+  font-size: 3rem;
+  color: $text-color-primary;
+  text-shadow: $text-shadow-secondary;
+  width: 100%;
+  text-align: center;
+}
+
+.offer-container {
+  display: flex;
+  align-items: center;
+  margin:25px 0 0 0;;
+}
+
+.form-offer-text {
+  margin: 0;
+}
+
+.form-button-offer {
+  font-size: 1.4rem;
+  margin-right: -18px;
+  color: $color-primary;
+  text-decoration: underline;
+}

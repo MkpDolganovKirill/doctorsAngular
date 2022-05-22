@@ -1,0 +1,60 @@
+@import 'src/styles-variables.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.global-header {
+  top: 0;
+  left: 0;
+  height: 10vh;
+  width: 100%;
+  position: absolute;
+  background: $color-header;
+  box-shadow: $box-shadow-primary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-start {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.header-image {
+  height: 80%;
+  margin: 0 40px;
+}
+
+.header-title {
+  font-family: $font-family;
+  font-weight: 600;
+  color: $text-color-primary;
+  text-shadow: $text-shadow-primary;
+  width: auto;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.header-button {
+  font-family: $font-family;
+  color: $text-color-inverse;
+  margin-right: 20px;
+  font-weight: 700;
+  font-size: 2rem;
+  padding: 10px;
+  height: 65%;
+}
+
+.mat-raised-button {
+  background-color: $color-secondary  !important;
+}
+
+@media (max-width: 500px) {
+  .global-header {
+    display: none;
+  }
+}

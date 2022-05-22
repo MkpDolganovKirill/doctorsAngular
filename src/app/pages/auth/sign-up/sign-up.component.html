@@ -1,0 +1,45 @@
+<div class="auth-container">
+  <img class="hospital-auth-image" src="/assets/icons/hospital.svg"/>
+  <form class="auth-form" [formGroup]="signUpForm">
+    <h1 class="form-title">Регистрация</h1>
+    <div class="input-element">
+      <mat-form-field appearance="fill">
+        <mat-label>Логин</mat-label>
+        <input matInput formControlName="login" placeholder="Введите логин">
+        <mat-hint align="end">Длина: {{minFieldLength}}-{{maxFieldLength}}, допустимые символы a-z A-Z 0-9</mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="input-element">
+      <mat-form-field appearance="fill">
+        <mat-label>Пароль</mat-label>
+        <input matInput [type]="hide.password ? 'password' : 'text'" formControlName="password" placeholder="Введите пароль">
+        <button mat-icon-button matSuffix (click)="hide.password = !hide.password" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide.password">
+          <mat-icon>{{hide.password ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint align="end">
+          Длина: {{minFieldLength}}-{{maxFieldLength}}, пароль должен содержать: a-z или A-Z и 0-9 </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="input-element">
+      <mat-form-field appearance="fill">
+        <mat-label>Повторите пароль</mat-label>
+        <input matInput [type]="hide.doublePassword ? 'password' : 'text'" formControlName="doublePassword" placeholder="Повторите пароль">
+        <button mat-icon-button matSuffix (click)="hide.doublePassword = !hide.doublePassword" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide.doublePassword">
+          <mat-icon>{{hide.doublePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint align="end">Пароли должны совпадать</mat-hint>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button class="form-button" (click)="onSubmit()" [disabled]="signUpForm?.invalid || (mainService.isLoading |async)">
+      Зарегистрироваться
+    </button>
+    <div class="offer-container">
+      <p class="form-offer-text">У вас уже есть аккаунт?</p>
+      <button mat-button class="form-button-offer" [disabled]="mainService.isLoading | async" (click)="redirectOnRegister()">
+        Войти
+      </button>
+    </div>
+  </form>
+</div>
