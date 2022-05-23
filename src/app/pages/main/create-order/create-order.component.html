@@ -1,12 +1,12 @@
 <form [formGroup]="creatingForm" class="create-form">
   <mat-form-field class="outlined-input name" appearance="outline">
     <mat-label>Имя</mat-label>
-    <input matInput formControlName="name" placeholder="Имя пациента">
+    <input matInput formControlName="patient" placeholder="Имя пациента">
   </mat-form-field>
   <mat-form-field class="outlined-input doctor" appearance="outline">
     <mat-label>Доктор</mat-label>
-    <mat-select #selectDoctor formControlName="doctors"  >
-      <mat-option value="" >--</mat-option>
+    <mat-select #selectDoctor formControlName="doctorId"  >
+      <mat-option value="" >Не выбран</mat-option>
       <mat-option *ngFor="let doctor of (mainService?.doctorsList | async)" [value]="doctor.id">
         {{doctor.fullname}}
       </mat-option>
@@ -15,7 +15,7 @@
   <mat-form-field class="outlined-input date" appearance="outline">
     <mat-label>Дата приема</mat-label>
     <input
-      matInput formControlName="date"
+      matInput formControlName="ordersdate"
       [min]="dateLimit.min"
       [max]="dateLimit.max"
       [matDatepicker]="picker" >
@@ -27,7 +27,7 @@
     <input matInput formControlName="complaints" placeholder="Введите жалобы">
   </mat-form-field>
   <div class="creating-button">
-    <button (click)="onSubmit()" [disabled]="creatingForm?.invalid || (mainService.isLoading |async)" mat-raised-button>
+    <button (click)="onSubmit()" [disabled]="creatingForm?.invalid || (mainService.isLoading | async)" mat-raised-button>
       Отправить
     </button>
   </div>

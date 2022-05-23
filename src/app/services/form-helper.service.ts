@@ -58,10 +58,19 @@ export class FormHelperService {
 
   creatingOrderForm() {
     return this.formBuilder.group({
-      name: new FormControl('', Validators.required),
-      doctors: new FormControl('', Validators.required),
-      date: new FormControl('', Validators.required),
+      patient: new FormControl('', Validators.required),
+      doctorId: new FormControl('', Validators.required),
+      ordersdate: new FormControl('', Validators.required),
       complaints: new FormControl('', Validators.required),
+    });
+  }
+
+  creatingSortingForm() {
+    return this.formBuilder.group({
+      sortMethod: new FormControl('createAt', Validators.required),
+      sortType: new FormControl('asc', Validators.required),
+      dateWith: new FormControl(''),
+      dateFor: new FormControl(''),
     });
   }
 }

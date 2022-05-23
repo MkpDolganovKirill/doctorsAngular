@@ -10,9 +10,27 @@ export interface IOrder {
   ordersdate: string;
   complaints: string;
 }
+
+export interface ICreateOrder {
+  patient: string;
+  doctor: string;
+  ordersdate: string;
+  complaints: string;
+}
+
 export interface ISortMethod {
   id: string;
   value: string;
-  dateWith?: string;
-  dateFor?: string;
+}
+
+export interface ISortingOptions {
+  sortMethod: string;
+  sortType: string;
+  dateWith: string;
+  dateFor: string;
+}
+
+export interface IGetOrdersRequest {
+  orders: IOrder[];
+  doctors: IDoctor[];
 }

@@ -1,37 +1,43 @@
-<form [formGroup]="creatingForm" class="create-form">
-  <mat-form-field class="outlined-input doctor" appearance="outline">
-    <mat-label>Доктор</mat-label>
-    <mat-select #selectDoctor formControlName="doctors">
-      <mat-option value="">--</mat-option>
-      <mat-option *ngFor="let method of sortMethodOptions" [value]="method.id">
+<form [formGroup]="sortingForm" class="create-form">
+  <div class="sort-options">
+  <mat-form-field #sortMethod class="outlined-input sortMethod" appearance="outline">
+    <mat-label>Сортировать</mat-label>
+    <mat-select  formControlName="sortMethod">
+      <mat-option *ngFor="let method of sortMethods.sortMethodOptions" [value]="method.id">
         {{method.value}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field class="outlined-input doctor" appearance="outline">
-    <mat-label>Доктор</mat-label>
-    <mat-select #selectDoctor formControlName="doctors">
-      <mat-option value="">--</mat-option>
-      <mat-option *ngFor="let type of sortTypeOptions" [value]="type.id">
-        {{type.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="outlined-input date" appearance="outline">
-    <mat-label>Дата приема</mat-label>
-    <input matInput formControlName="date" [min]="dateLimit.min" [max]="dateLimit.max" [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker [opened]="isDatePickerOpen"></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field class="outlined-input date" appearance="outline">
-    <mat-label>Дата приема</mat-label>
-    <input matInput formControlName="date" [min]="dateLimit.min" [max]="dateLimit.max" [matDatepicker]="picker">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker [opened]="isDatePickerOpen"></mat-datepicker>
-  </mat-form-field>
-  <div class="creating-button">
-    <!-- <button (click)="onSubmit()"  mat-raised-button>
-      Отправить
-    </button> -->
+  <!--  -->
+    <mat-form-field *ngIf="sortValues.sortMethod !== 'createdAt'" class="outlined-input sortType" appearance="outline">
+      <mat-label>Тип сортировки</mat-label>
+      <mat-select #selectType formControlName="sortType">
+        <mat-option *ngFor="let type of sortMethods.sortTypeOptions" [value]="type.id">
+          {{type.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button 
+    *ngIf="sortValues.sortMethod !== 'createdAt' && !sortValues.showDateFilter"
+    mat-flat-button class="add-filter-button"
+    (click)="changeDateFilterShow()">
+      Добавить фильтр по дате +
+    </button>
+  </div>
+  <div class="date-filter" *ngIf="sortValues.showDateFilter">
+    <mat-form-field class="outlined-input dateWith" appearance="outline">
+      <mat-label>Дата с</mat-label>
+      <input matInput formControlName="dateWith" [matDatepicker]="dateWithPicker">
+      <mat-datepicker-toggle matSuffix [for]="dateWithPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dateWithPicker [opened]="isDatePickerOpen"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="outlined-input dateFor" appearance="outline">
+      <mat-label>Дата по</mat-label>
+      <input matInput formControlName="dateFor" [matDatepicker]="dateForPicker">
+      <mat-datepicker-toggle matSuffix [for]="dateForPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dateForPicker [opened]="isDatePickerOpen"></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button class="filter-buttons" (click)="submitSortingWithDateFilter()">Фильтровать</button>
+    <button mat-flat-button class="filter-buttons" (click)="changeDateFilterShow()">Закрыть</button>
   </div>
 </form>

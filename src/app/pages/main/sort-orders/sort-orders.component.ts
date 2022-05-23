@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ISortMethod } from 'src/app/interfaces/orders.interfaces';
+import { distinctUntilChanged, map } from 'rxjs';
+import { SortMethodsService } from 'src/app/services/sort-methods.service';
 import { FormHelperService } from 'src/app/services/form-helper.service';
+import { DatePipe } from '@angular/common';
+import { HttpService } from 'src/app/services/http.service';
+import { MainService } from 'src/app/services/main.service';
 
 @Component({
   selector: 'sort-orders-main',
@@ -9,43 +13,54 @@ import { FormHelperService } from 'src/app/services/form-helper.service';
   styleUrls: ['./sort-orders.component.scss'],
 })
 export class SortOrdersComponent implements OnInit {
-  public dateLimit = {
-    min: new Date(),
-    max: new Date(9999, 0, 1),
+  public sortValues = {
+    sortMethod: 'createdAt',
+    showDateFilter: false,
   };
-  public sortMethodOptions: ISortMethod[] = [
-    {
-      id: 'creatAt',
-      value: 'Не выбрано',
-    },
-    {
-      id: 'patient',
-      value: 'По имени',
-    },
-    {
-      id: 'doctor',
-      value: 'По доктору',
-    },
-    {
-      id: 'date',
-      value: 'По дате',
-    },
-  ];
-  public sortTypeOptions: ISortMethod[] = [
-    {
-      id: 'asc',
-      value: 'По возрастанию',
-    },
-    {
-      id: 'desc',
-      value: 'По убыванию',
-    },
-  ];
   public isDatePickerOpen = false;
-  public creatingForm: FormGroup;
-  constructor(private formBuilder: FormHelperService) {
-    this.creatingForm = this.formBuilder.creatingOrderForm();
+  public sortingForm: FormGroup;
+  constructor(
+    private formBuilder: FormHelperService,
+    private datePipe: DatePipe,
+    public sortMethods: SortMethodsService,
+    private httpService: HttpService,
+    private mainService: MainService,
+  ) {
+    this.sortingForm = this.formBuilder.creatingSortingForm();
+
+    this.sortingForm.valueChanges
+      .pipe(
+        map((data) => ({
+          sortMethod: data.sortMethod,
+          sortType: data.sortType,
+        })),
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+      )
+      .subscribe((data) => {
+        this.sortValues.sortMethod = data.sortMethod;
+        this.mainService.sortingRequestOptions.next({
+          ...this.mainService.sortingRequestOptions.getValue(),
+          ...data,
+        });
+        this.httpService.getAllOrdersUser();
+        if (data.sortMethod === 'createdAt') {
+          this.sortValues.showDateFilter = false;
+          this.sortingForm.controls['sortType'].setValue('asc');
+          this.sortingForm.controls['dateWith'].setValue('');
+          this.sortingForm.controls['dateFor'].setValue('');
+        }
+      });
   }
 
   ngOnInit(): void {}
+
+  submitSortingWithDateFilter() {
+    console.log(this.sortingForm.value);
+  }
+
+  changeDateFilterShow() {
+    this.sortValues.showDateFilter = !this.sortValues.showDateFilter;
+    this.sortingForm.controls['dateWith'].setValue('');
+    this.sortingForm.controls['dateFor'].setValue('');
+  }
 }

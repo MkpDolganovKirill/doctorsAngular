@@ -29,3 +29,13 @@ export const snackBarUnknownUser: ISnackBar = {
     horizontalPosition: 'right',
   },
 };
+
+export const snackBarDeletedOrder: ISnackBar = {
+  message: 'Данный прием не существует',
+  action: 'Закрыть',
+  optional: {
+    duration: 3000,
+    verticalPosition: 'top',
+    horizontalPosition: 'right',
+  },
+};

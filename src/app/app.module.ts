@@ -17,6 +17,7 @@ import { SortOrdersComponent } from './pages/main/sort-orders/sort-orders.compon
 import { ShowOrdersComponent } from './pages/main/show-orders/show-orders.component';
 import { NotExistOrdersComponent } from './pages/main/not-exist-orders/not-exist-orders.component';
 import { MainComponent } from './pages/main/main.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { MainComponent } from './pages/main/main.component';
     ReactiveFormsModule,
     MaterialModule,
   ],
-  providers: [FormHelperService, HttpService],
+  providers: [FormHelperService, HttpService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
