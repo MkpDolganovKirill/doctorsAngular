@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormHelperService } from 'src/app/services/form-helper.service';
-import { HttpService } from 'src/app/services/http.service';
+import { ApiService } from 'src/app/services/api.service';
 import { MainService } from 'src/app/services/main.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class SignUpComponent {
 
   constructor(
     private newSignUpForm: FormHelperService,
-    private http: HttpService,
+    private http: ApiService,
     public mainService: MainService,
     private router: Router,
   ) {
@@ -32,6 +32,6 @@ export class SignUpComponent {
   }
 
   redirectOnRegister() {
-    this.router.navigateByUrl('/auth');
+    this.router.navigate(['/auth']);
   }
 }

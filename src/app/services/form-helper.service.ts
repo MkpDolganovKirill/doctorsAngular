@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { IOrder } from '../interfaces/orders.interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +63,15 @@ export class FormHelperService {
       doctorId: new FormControl('', Validators.required),
       ordersdate: new FormControl('', Validators.required),
       complaints: new FormControl('', Validators.required),
+    });
+  }
+
+  creatingEditForm(element: IOrder) {
+    return this.formBuilder.group({
+      patient: new FormControl(element.patient, Validators.required),
+      doctorId: new FormControl(element.doctorId, Validators.required),
+      ordersdate: new FormControl(new Date(element.ordersdate), Validators.required),
+      complaints: new FormControl(element.complaints, Validators.required),
     });
   }
 

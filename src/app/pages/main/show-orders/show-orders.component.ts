@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderService } from 'src/app/services/order.service';
+import { ApiService } from 'src/app/services/api.service';
+import { EditDialogComponent } from 'src/app/components/edit-dialog/edit-dialog.component';
+import { DeleteDialogComponent } from 'src/app/components/delete-dialog/delete-dialog.component';
 import { IOrder } from 'src/app/interfaces/orders.interfaces';
-import { MainService } from 'src/app/services/main.service';
-import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'show-orders-main',
@@ -9,18 +12,36 @@ import { HttpService } from 'src/app/services/http.service';
   styleUrls: ['./show-orders.component.scss'],
 })
 export class ShowOrdersComponent implements OnInit {
-  public displayedColumns: string[] = ['patient', 'doctor', 'ordersdate', 'complaints', 'actions'];
-  public nullOrNot: Array<IOrder> = [];
-  constructor(public mainService: MainService, private httpService: HttpService) {}
+  public readonly displayedColumns: string[] = [
+    'patient',
+    'doctor',
+    'ordersdate',
+    'complaints',
+    'actions',
+  ];
+  constructor(
+    private httpService: ApiService,
+    public orderService: OrderService,
+    public dialog: MatDialog,
+  ) {}
   public ngOnInit(): void {
-    this.httpService.getAllOrdersUser();
-    this.mainService.ordersList.subscribe((list) => {
-      this.nullOrNot = list;
+    this.orderService.sortingRequestOptions.subscribe(() => {
+      this.httpService.getAllOrdersUser();
+    });
+  }
+  openEditDialog(element: IOrder): void {
+    this.dialog.open(EditDialogComponent, {
+      width: '50%',
+      data: { ...element },
     });
   }
 
-  deleteOrder(element: IOrder) {
-    this.httpService.deleteOrderFromServer(element);
-    this.httpService.getAllOrdersUser();
+  openDeleteDialog(element: IOrder): void {
+    this.dialog
+      .open(DeleteDialogComponent)
+      .afterClosed()
+      .subscribe((answer) => {
+        if (answer) this.httpService.deleteOrderFromServer(element);
+      });
   }
 }

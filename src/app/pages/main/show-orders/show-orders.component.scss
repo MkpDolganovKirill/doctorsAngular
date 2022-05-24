@@ -1,8 +1,9 @@
-
+@import 'src/styles-variables.scss';
 
 .container {
-  height: 75vh;
-  margin-top: 5px;
+  height: auto;
+  margin-top: 10px;
+  overflow: auto;
   width: 100%;
   .data-table {
     width: 100%;
@@ -13,6 +14,14 @@
   height: 30px;
   width: 30px;
   margin-left: 15px;
+  transition: .2s;
+  padding: 3px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.action-buttons:hover {
+  background: lightcyan;
 }
 
 .action-header {

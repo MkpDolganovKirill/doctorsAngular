@@ -6,7 +6,8 @@ export interface IDoctor {
 export interface IOrder {
   id: string;
   patient: string;
-  doctor: IDoctor;
+  doctor?: IDoctor;
+  doctorId: string;
   ordersdate: string;
   complaints: string;
 }

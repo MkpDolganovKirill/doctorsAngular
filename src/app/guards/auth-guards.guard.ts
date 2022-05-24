@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +7,7 @@ import { Observable } from 'rxjs';
 export class AuthGuardsGuard implements CanActivate {
   constructor(private router: Router) {}
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(): boolean {
     if (!localStorage.getItem('accesstoken') || !localStorage.getItem('refreshtoken')) {
       this.router.navigate(['/auth']);
       return false;

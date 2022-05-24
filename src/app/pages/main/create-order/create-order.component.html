@@ -1,13 +1,13 @@
 <form [formGroup]="creatingForm" class="create-form">
   <mat-form-field class="outlined-input name" appearance="outline">
-    <mat-label>Имя</mat-label>
+    <mat-label>ФИО пациента</mat-label>
     <input matInput formControlName="patient" placeholder="Имя пациента">
   </mat-form-field>
   <mat-form-field class="outlined-input doctor" appearance="outline">
     <mat-label>Доктор</mat-label>
     <mat-select #selectDoctor formControlName="doctorId"  >
       <mat-option value="" >Не выбран</mat-option>
-      <mat-option *ngFor="let doctor of (mainService?.doctorsList | async)" [value]="doctor.id">
+      <mat-option *ngFor="let doctor of (doctorService?.doctorsList | async)" [value]="doctor.id">
         {{doctor.fullname}}
       </mat-option>
     </mat-select>

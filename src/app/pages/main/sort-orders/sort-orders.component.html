@@ -3,16 +3,15 @@
   <mat-form-field #sortMethod class="outlined-input sortMethod" appearance="outline">
     <mat-label>Сортировать</mat-label>
     <mat-select  formControlName="sortMethod">
-      <mat-option *ngFor="let method of sortMethods.sortMethodOptions" [value]="method.id">
+      <mat-option *ngFor="let method of sortParams.sortMethod" [value]="method.id">
         {{method.value}}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <!--  -->
     <mat-form-field *ngIf="sortValues.sortMethod !== 'createdAt'" class="outlined-input sortType" appearance="outline">
       <mat-label>Тип сортировки</mat-label>
       <mat-select #selectType formControlName="sortType">
-        <mat-option *ngFor="let type of sortMethods.sortTypeOptions" [value]="type.id">
+        <mat-option *ngFor="let type of sortParams.sortType" [value]="type.id">
           {{type.value}}
         </mat-option>
       </mat-select>

@@ -38,6 +38,7 @@ $frontend-theme: mat.define-light-theme((
 @import 'src/material-styles/inputs.scss';
 @import 'src/material-styles/buttons.scss';
 @import 'src/material-styles/progress-bar.scss';
+@import 'src/material-styles/edit-dialog.scss';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: $font-family; }

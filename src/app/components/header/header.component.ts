@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   logOut(): void {
     localStorage.clear();
-    this.router.navigateByUrl('/auth');
+    this.router.navigate(['/auth']);
   }
 
   changeHeaderTitle(url: string): void {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormHelperService } from 'src/app/services/form-helper.service';
-import { HttpService } from 'src/app/services/http.service';
+import { ApiService } from 'src/app/services/api.service';
 import { MainService } from 'src/app/services/main.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class SignInComponent {
 
   constructor(
     private newSignInForm: FormHelperService,
-    private http: HttpService,
+    private http: ApiService,
     private router: Router,
     public mainService: MainService,
   ) {
@@ -26,11 +26,10 @@ export class SignInComponent {
   }
 
   onSubmit() {
-    console.log(this.signInForm.value);
     this.http.authenticateUser(this.signInForm.value);
   }
 
   redirectOnRegister() {
-    this.router.navigateByUrl('/auth/registration');
+    this.router.navigate(['/auth/registration']);
   }
 }

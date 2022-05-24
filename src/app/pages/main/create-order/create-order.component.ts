@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormHelperService } from 'src/app/services/form-helper.service';
 import { MainService } from 'src/app/services/main.service';
-import { DatePipe } from '@angular/common';
-import { HttpService } from 'src/app/services/http.service';
+import { ApiService } from 'src/app/services/api.service';
+import { DoctorService } from 'src/app/services/doctor.service';
 
 @Component({
   selector: 'create-order-component',
@@ -24,14 +25,14 @@ export class CreateOrderComponent {
   constructor(
     private formBuilder: FormHelperService,
     public mainService: MainService,
+    public doctorService: DoctorService,
     private datePipe: DatePipe,
-    private http: HttpService,
+    private http: ApiService,
   ) {
     this.creatingForm = this.formBuilder.creatingOrderForm();
 
     this.creatingForm.valueChanges.subscribe((res) => {
       this.isDatePickerOpen = res.doctorId && !res.ordersdate ? true : false;
-      console.log(res);
 
       return res.patient?.length > 6 && !res.doctorId
         ? this.selectDoctor?.open()
