@@ -9,19 +9,24 @@ import { MainService } from './main.service';
 export class ErrorService {
   constructor(private mainService: MainService, private router: Router) {}
   errorHandlerRequests(err: any) {
-    if (err?.status === 0)
-      return this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarNotConnect);
-    if (err?.error?.error?.original?.code === '23505')
-      return this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarExistUser);
-    if (err?.status === 422) {
-      return this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarUnknownUser);
-    }
-    if (err?.status === 404) {
-      return this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarDeletedOrder);
-    }
-    if (err?.status === 403) {
-      localStorage.clear();
-      return this.router.navigate(['/auth']);
+    switch (err?.status) {
+      case 0:
+        this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarNotConnect);
+        break;
+      case 403:
+        localStorage.clear();
+        this.router.navigate(['/auth']);
+        break;
+      case 404:
+        this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarDeletedOrder);
+        break;
+      case 422:
+        this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarUnknownUser);
+        break;
+      default:
+        if (err?.error?.error?.original?.code === '23505')
+          this.mainService.showSnackBar.next(ERROR_MESSAGES.snackBarExistUser);
+        break;
     }
   }
 }

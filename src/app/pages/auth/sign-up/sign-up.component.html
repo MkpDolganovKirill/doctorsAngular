@@ -6,28 +6,39 @@
       <mat-form-field class="fill-input" appearance="fill">
         <mat-label>Логин</mat-label>
         <input matInput formControlName="login" placeholder="Введите логин">
-        <mat-hint align="end">Длина: {{minFieldLength}}-{{maxFieldLength}}, допустимые символы a-z A-Z 0-9</mat-hint>
+        <mat-hint align="end">Длина: {{minLoginFieldLength}}-{{maxLoginFieldLength}}, допустимые символы a-z A-Z 0-9</mat-hint>
       </mat-form-field>
     </div>
     <div class="input-element">
       <mat-form-field class="fill-input" appearance="fill">
         <mat-label>Пароль</mat-label>
-        <input matInput [type]="hide.password ? 'password' : 'text'" formControlName="password" placeholder="Введите пароль">
-        <button mat-icon-button matSuffix (click)="hide.password = !hide.password" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide.password">
-          <mat-icon>{{hide.password ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <input
+          matInput
+          [type]="hidePassword.password ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="Введите пароль">
+        <button mat-icon-button matSuffix (click)="hidePassword.password = !hidePassword.password" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword.password">
+          <mat-icon>{{hidePassword.password ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-hint align="end">
-          Длина: {{minFieldLength}}-{{maxFieldLength}}, пароль должен содержать: a-z или A-Z и 0-9 </mat-hint>
+          Длина: {{minPasswordFieldLength}}-{{maxPasswordFieldLength}}, пароль должен содержать: a-z или A-Z и 0-9 </mat-hint>
       </mat-form-field>
     </div>
     <div class="input-element">
       <mat-form-field class="fill-input" appearance="fill">
         <mat-label>Повторите пароль</mat-label>
-        <input matInput [type]="hide.doublePassword ? 'password' : 'text'" formControlName="doublePassword" placeholder="Повторите пароль">
-        <button mat-icon-button matSuffix (click)="hide.doublePassword = !hide.doublePassword" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide.doublePassword">
-          <mat-icon>{{hide.doublePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <input
+          matInput
+          [type]="hidePassword.doublePassword ? 'password' : 'text'"
+          formControlName="doublePassword"
+          placeholder="Повторите пароль">
+        <button 
+          mat-icon-button matSuffix
+          (click)="hidePassword.doublePassword = !hidePassword.doublePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword.doublePassword">
+          <mat-icon>{{hidePassword.doublePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-hint align="end">Пароли должны совпадать</mat-hint>
       </mat-form-field>

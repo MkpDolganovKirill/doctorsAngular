@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { catchError, finalize, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { MainService } from './main.service';
-import { ErrorService } from './error.service';
-import { OrderService } from './order.service';
-import { DoctorService } from './doctor.service';
 import { IAuth, IUser } from '../interfaces/user.interface';
-import { IGetOrdersRequest, IOrder } from '../interfaces/orders.interfaces';
+import { IGetOrdersRequest, IOrder, ISortingOptions } from '../interfaces/orders.interfaces';
+import * as LOCALSTORAGE_DATA from 'src/constants/localstorage-data.constants';
+import * as REQUESTS_PATH_LINKS from 'src/constants/requests-path-links.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -16,181 +13,75 @@ import { IGetOrdersRequest, IOrder } from '../interfaces/orders.interfaces';
 export class ApiService {
   public isLoading = false;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private mainServise: MainService,
-    private errorService: ErrorService,
-    private doctorService: DoctorService,
-    private orderService: OrderService,
-  ) {}
+  constructor(private http: HttpClient) {}
 
-  //todo add return type
-  public createUser(body: IUser): void {
-    this.mainServise.isLoading.next(true);
-    this.http
-      .post<IAuth>(`${environment.requestLink}createNewUser`, body)
-      .pipe(
-        catchError((err) => {
-          this.errorService.errorHandlerRequests(err);
-          return of(null);
-        }),
-        finalize(() => {
-          this.mainServise.isLoading.next(false);
-        }),
-      )
-      .subscribe((result: IAuth | null) => {
-        if (result) {
-          localStorage.setItem('accesstoken', result.accesstoken);
-          localStorage.setItem('refreshtoken', result.refreshtoken);
-          this.router.navigate(['/main']);
-        }
-      });
+  public createUser(body: IUser): Observable<IAuth> {
+    return this.http.post<IAuth>(
+      `${environment.requestLink}${REQUESTS_PATH_LINKS.linkForCreateUser}`,
+      body,
+    );
   }
 
-  public authenticateUser(body: IUser): void {
-    this.mainServise.isLoading.next(true);
-    this.http
-      .post<IAuth>(`${environment.requestLink}authorizationUser`, body)
-      .pipe(
-        catchError((err) => {
-          this.errorService.errorHandlerRequests(err);
-          return of(null);
-        }),
-        finalize(() => {
-          this.mainServise.isLoading.next(false);
-        }),
-      )
-      .subscribe((result: IAuth | null) => {
-        if (result) {
-          localStorage.setItem('accesstoken', result.accesstoken);
-          localStorage.setItem('refreshtoken', result.refreshtoken);
-          this.router.navigate(['/main']);
-        }
-      });
+  public authenticateUser(body: IUser): Observable<IAuth> {
+    return this.http.post<IAuth>(
+      `${environment.requestLink}${REQUESTS_PATH_LINKS.linkForAuthUser}`,
+      body,
+    );
   }
 
-  public getAllOrdersUser(): void {
-    this.mainServise.isLoading.next(true);
-    this.http
-      .get<IGetOrdersRequest>(`${environment.requestLink}getAllUserOrders`, {
+  public getAllUsersOrder(sortingOptions: ISortingOptions): Observable<IGetOrdersRequest | IAuth> {
+    return this.http.get<IGetOrdersRequest | IAuth>(
+      `${environment.requestLink}${REQUESTS_PATH_LINKS.linkForGetAllOrders}`,
+      {
         headers: {
-          accesstoken: `${localStorage.getItem('accesstoken')}`,
-          refreshtoken: `${localStorage.getItem('refreshtoken')}`,
+          accesstoken: `${localStorage.getItem(LOCALSTORAGE_DATA.accesstoken)}`,
+          refreshtoken: `${localStorage.getItem(LOCALSTORAGE_DATA.refreshtoken)}`,
         },
         params: {
-          sortMethod: this.orderService.sortingRequestOptions.getValue().sortMethod,
-          sortType: this.orderService.sortingRequestOptions.getValue().sortType,
-          dateWith: this.orderService.sortingRequestOptions.getValue().dateWith,
-          dateFor: this.orderService.sortingRequestOptions.getValue().dateFor,
+          sortMethod: sortingOptions.sortMethod,
+          sortType: sortingOptions.sortType,
+          dateWith: sortingOptions.dateWith,
+          dateFor: sortingOptions.dateFor,
         },
-      })
-      .pipe(
-        catchError((err) => {
-          this.errorService.errorHandlerRequests(err);
-          return of(null);
-        }),
-        finalize(() => {
-          this.mainServise.isLoading.next(false);
-        }),
-      )
-      .subscribe((result: IGetOrdersRequest | IAuth | null) => {
-        if ((<IGetOrdersRequest>result)?.orders && (<IGetOrdersRequest>result)?.doctors) {
-          this.orderService.ordersList.next((<IGetOrdersRequest>result).orders);
-          this.doctorService.doctorsList.next((<IGetOrdersRequest>result).doctors);
-        }
-        if ((<IAuth>result)?.accesstoken && (<IAuth>result)?.refreshtoken) {
-          localStorage.setItem('accesstoken', (<IAuth>result).accesstoken);
-          localStorage.setItem('refreshtoken', (<IAuth>result).refreshtoken);
-          this.getAllOrdersUser();
-        }
-      });
+      },
+    );
   }
 
-  public editOrder(data: IOrder): void {
-    this.mainServise.isLoading.next(true);
-    this.http
-      .patch<IOrder>(`${environment.requestLink}updateUserOrder`, data, {
+  public editOrder(data: IOrder): Observable<IOrder | IAuth> {
+    return this.http.patch<IOrder>(
+      `${environment.requestLink}${REQUESTS_PATH_LINKS.linkForUpdateOrder}`,
+      data,
+      {
         headers: {
-          accesstoken: `${localStorage.getItem('accesstoken')}`,
-          refreshtoken: `${localStorage.getItem('refreshtoken')}`,
+          accesstoken: `${localStorage.getItem(LOCALSTORAGE_DATA.accesstoken)}`,
+          refreshtoken: `${localStorage.getItem(LOCALSTORAGE_DATA.refreshtoken)}`,
         },
-      })
-      .pipe(
-        catchError((err) => {
-          this.errorService.errorHandlerRequests(err);
-          return of(null);
-        }),
-        finalize(() => {
-          this.mainServise.isLoading.next(false);
-        }),
-      )
-      .subscribe((result: IOrder | IAuth | null) => {
-        if ((<IAuth>result)?.accesstoken && (<IAuth>result)?.refreshtoken) {
-          localStorage.setItem('accesstoken', (<IAuth>result).accesstoken);
-          localStorage.setItem('refreshtoken', (<IAuth>result).refreshtoken);
-          this.editOrder(data);
-        } else if (result) {
-          this.getAllOrdersUser();
-        }
-      });
+      },
+    );
   }
 
-  public createOrder(data: IOrder): void {
-    this.mainServise.isLoading.next(true);
-    this.http
-      .post<IOrder>(`${environment.requestLink}addNewOrder`, data, {
+  public createOrder(data: IOrder): Observable<IOrder | IAuth> {
+    return this.http.post<IOrder>(
+      `${environment.requestLink}${REQUESTS_PATH_LINKS.linkForAddNewOrder}`,
+      data,
+      {
         headers: {
-          accesstoken: `${localStorage.getItem('accesstoken')}`,
-          refreshtoken: `${localStorage.getItem('refreshtoken')}`,
+          accesstoken: `${localStorage.getItem(LOCALSTORAGE_DATA.accesstoken)}`,
+          refreshtoken: `${localStorage.getItem(LOCALSTORAGE_DATA.refreshtoken)}`,
         },
-      })
-      .pipe(
-        catchError((err) => {
-          this.errorService.errorHandlerRequests(err);
-          return of(null);
-        }),
-        finalize(() => {
-          this.mainServise.isLoading.next(false);
-        }),
-      )
-      .subscribe((result: IOrder | IAuth | null) => {
-        if ((<IAuth>result)?.accesstoken && (<IAuth>result)?.refreshtoken) {
-          localStorage.setItem('accesstoken', (<IAuth>result).accesstoken);
-          localStorage.setItem('refreshtoken', (<IAuth>result).refreshtoken);
-          this.createOrder(data);
-        } else if (result) {
-          this.getAllOrdersUser();
-        }
-      });
+      },
+    );
   }
 
-  public deleteOrderFromServer(body: IOrder): void {
-    this.mainServise.isLoading.next(true);
-    this.http
-      .delete<IAuth>(`${environment.requestLink}deleteUsersOrder?id=${body.id}`, {
+  public deleteOrder(id: string): any {
+    return this.http.delete<IAuth>(
+      `${environment.requestLink}${REQUESTS_PATH_LINKS.linkForDeleteOrder}${id}`,
+      {
         headers: {
-          accesstoken: `${localStorage.getItem('accesstoken')}`,
-          refreshtoken: `${localStorage.getItem('refreshtoken')}`,
+          accesstoken: `${localStorage.getItem(LOCALSTORAGE_DATA.accesstoken)}`,
+          refreshtoken: `${localStorage.getItem(LOCALSTORAGE_DATA.refreshtoken)}`,
         },
-      })
-      .pipe(
-        catchError((err) => {
-          this.errorService.errorHandlerRequests(err);
-          return of(null);
-        }),
-        finalize(() => {
-          this.mainServise.isLoading.next(false);
-        }),
-      )
-      .subscribe((result: IAuth | null) => {
-        if (result?.accesstoken && result?.refreshtoken) {
-          localStorage.setItem('accesstoken', result.accesstoken);
-          localStorage.setItem('refreshtoken', result.refreshtoken);
-          this.deleteOrderFromServer(body);
-        } else if (result) {
-          this.getAllOrdersUser();
-        }
-      });
+      },
+    );
   }
 }

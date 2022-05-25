@@ -38,21 +38,19 @@ export class HeaderComponent implements OnInit {
 
   changeHeaderTitle(url: string): void {
     const lastPathSegment = url.split('/').pop();
+    this.ButtonShow = false;
     switch (lastPathSegment) {
       case 'main':
         this.ButtonShow = true;
         this.pageName = 'Приемы';
         break;
       case 'auth':
-        this.ButtonShow = false;
         this.pageName = 'Авторизация';
         break;
       case 'registration':
-        this.ButtonShow = false;
         this.pageName = 'Регистрация';
         break;
       default:
-        this.ButtonShow = false;
         this.pageName = 'Неизвестная страница';
         break;
     }

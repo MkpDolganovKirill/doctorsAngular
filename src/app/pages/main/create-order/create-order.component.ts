@@ -4,8 +4,9 @@ import { DatePipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { FormHelperService } from 'src/app/services/form-helper.service';
 import { MainService } from 'src/app/services/main.service';
-import { ApiService } from 'src/app/services/api.service';
 import { DoctorService } from 'src/app/services/doctor.service';
+import { OrderService } from 'src/app/services/order.service';
+import { dateForSendOnBackEnd } from 'src/constants/format-date.constants';
 
 @Component({
   selector: 'create-order-component',
@@ -24,15 +25,15 @@ export class CreateOrderComponent {
 
   constructor(
     private formBuilder: FormHelperService,
+    private datePipe: DatePipe,
+    private orderService: OrderService,
     public mainService: MainService,
     public doctorService: DoctorService,
-    private datePipe: DatePipe,
-    private http: ApiService,
   ) {
     this.creatingForm = this.formBuilder.creatingOrderForm();
 
     this.creatingForm.valueChanges.subscribe((res) => {
-      this.isDatePickerOpen = res.doctorId && !res.ordersdate ? true : false;
+      this.isDatePickerOpen = !!res.doctorId && !res.ordersdate;
 
       return res.patient?.length > 6 && !res.doctorId
         ? this.selectDoctor?.open()
@@ -43,9 +44,9 @@ export class CreateOrderComponent {
   public onSubmit() {
     const addingValues = {
       ...this.creatingForm.value,
-      ordersdate: this.datePipe.transform(this.creatingForm.value.ordersdate, 'yyyy-MM-dd'),
+      ordersdate: this.datePipe.transform(this.creatingForm.value.ordersdate, dateForSendOnBackEnd),
     };
-    this.http.createOrder(addingValues);
+    this.orderService.createOrder(addingValues);
     this.creatingForm.reset();
   }
 }

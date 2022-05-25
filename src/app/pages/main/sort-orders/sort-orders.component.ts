@@ -6,6 +6,7 @@ import { FormHelperService } from 'src/app/services/form-helper.service';
 import { MainService } from 'src/app/services/main.service';
 import { sortMethodOptions, sortTypeOptions } from 'src/constants/sort-method.constants';
 import { OrderService } from 'src/app/services/order.service';
+import { dateForSendOnBackEnd } from 'src/constants/format-date.constants';
 
 @Component({
   selector: 'sort-orders-main',
@@ -14,7 +15,7 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class SortOrdersComponent {
   public sortValues = {
-    sortMethod: 'createdAt',
+    sortMethod: sortMethodOptions[0].id,
     showDateFilter: false,
   };
   public isDatePickerOpen = false;
@@ -37,7 +38,9 @@ export class SortOrdersComponent {
           sortMethod: data.sortMethod,
           sortType: data.sortType,
         })),
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+        distinctUntilChanged(
+          (oldData, newData) => JSON.stringify(oldData) === JSON.stringify(newData),
+        ),
       )
       .subscribe((data) => {
         this.sortValues.sortMethod = data.sortMethod;
@@ -45,9 +48,9 @@ export class SortOrdersComponent {
           ...this.orderService.sortingRequestOptions.getValue(),
           ...data,
         });
-        if (data.sortMethod === 'createdAt') {
+        if (data.sortMethod === sortMethodOptions[0].id) {
           this.sortValues.showDateFilter = false;
-          this.sortingForm.controls['sortType'].setValue('asc');
+          this.sortingForm.controls['sortType'].setValue(sortTypeOptions[0].id);
           this.sortingForm.controls['dateWith'].setValue('');
           this.sortingForm.controls['dateFor'].setValue('');
           this.orderService.sortingRequestOptions.next({
@@ -60,8 +63,9 @@ export class SortOrdersComponent {
   submitSortingWithDateFilter() {
     this.orderService.sortingRequestOptions.next({
       ...this.orderService.sortingRequestOptions.getValue(),
-      dateWith: this.datePipe.transform(this.sortingForm.value.dateWith, 'yyyy-MM-dd') || '',
-      dateFor: this.datePipe.transform(this.sortingForm.value.dateFor, 'yyyy-MM-dd') || '',
+      dateWith:
+        this.datePipe.transform(this.sortingForm.value.dateWith, dateForSendOnBackEnd) || '',
+      dateFor: this.datePipe.transform(this.sortingForm.value.dateFor, dateForSendOnBackEnd) || '',
     });
   }
 

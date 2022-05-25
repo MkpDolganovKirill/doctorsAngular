@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from 'src/app/services/order.service';
-import { ApiService } from 'src/app/services/api.service';
 import { EditDialogComponent } from 'src/app/components/edit-dialog/edit-dialog.component';
 import { DeleteDialogComponent } from 'src/app/components/delete-dialog/delete-dialog.component';
 import { IOrder } from 'src/app/interfaces/orders.interfaces';
+import { dateForDisplayOnPage } from 'src/constants/format-date.constants';
+import { displayedColumnsForOrderTable } from 'src/constants/table-displayed.constants';
 
 @Component({
   selector: 'show-orders-main',
@@ -12,21 +13,12 @@ import { IOrder } from 'src/app/interfaces/orders.interfaces';
   styleUrls: ['./show-orders.component.scss'],
 })
 export class ShowOrdersComponent implements OnInit {
-  public readonly displayedColumns: string[] = [
-    'patient',
-    'doctor',
-    'ordersdate',
-    'complaints',
-    'actions',
-  ];
-  constructor(
-    private httpService: ApiService,
-    public orderService: OrderService,
-    public dialog: MatDialog,
-  ) {}
+  public readonly displayedColumns = displayedColumnsForOrderTable;
+  public dateFormat = dateForDisplayOnPage;
+  constructor(public orderService: OrderService, public dialog: MatDialog) {}
   public ngOnInit(): void {
     this.orderService.sortingRequestOptions.subscribe(() => {
-      this.httpService.getAllOrdersUser();
+      this.orderService.getAllOrders();
     });
   }
   openEditDialog(element: IOrder): void {
@@ -36,12 +28,12 @@ export class ShowOrdersComponent implements OnInit {
     });
   }
 
-  openDeleteDialog(element: IOrder): void {
+  openDeleteDialog(id: string): void {
     this.dialog
       .open(DeleteDialogComponent)
       .afterClosed()
       .subscribe((answer) => {
-        if (answer) this.httpService.deleteOrderFromServer(element);
+        if (answer) this.orderService.deleteOrder(id);
       });
   }
 }
