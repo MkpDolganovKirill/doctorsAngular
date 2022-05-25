@@ -1,8 +1,21 @@
 @import 'src/styles-variables.scss';
 
-.mat-form-field-flex {
-  background-color: $color-primary !important;
+.fill-input {
+  div.mat-form-field-flex {
+    background-color: $color-primary  !important;
+  }
+  .mat-hint {
+      color: $text-color-primary !important;
+  }
 }
+
+.outlined-input {
+  background-color: transparent !important;
+  div.mat-focused {
+    color: red !important;
+  }
+}
+
 
 .mat-form-field.mat-focused .mat-form-field-ripple {
   background-color: $color-secondary;

@@ -1,0 +1,35 @@
+@import 'src/styles-variables.scss';
+
+.container {
+  height: auto;
+  margin-top: 10px;
+  overflow: auto;
+  width: 100%;
+  .data-table {
+    width: 100%;
+  }
+}
+
+.action-buttons {
+  height: 30px;
+  width: 30px;
+  margin-left: 15px;
+  transition: .2s;
+  padding: 3px;
+  border: 0;
+  border-radius: 5px;
+}
+
+.action-buttons:hover {
+  background: lightcyan;
+}
+
+.action-header {
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  width: 100px;
+}
+
+.action-body {
+  padding: 0 !important;
+}

@@ -1,0 +1,55 @@
+@import 'src/styles-variables.scss';
+
+.create-form {
+  padding: 20px 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  align-items: left;
+  box-shadow: $box-shadow-primary;
+}
+
+.creating-button {
+  margin-bottom: 25px;
+
+  button {
+    height: 60px;
+  }
+}
+
+.sortMethod {
+  width: 250px;
+}
+
+.sort-options {
+  width: 80%;
+}
+
+.sortType {
+  width: 250px;
+  margin-left: 20px;
+}
+
+.add-filter-button {
+  font-size: 1.2rem;
+  margin-left: 20px;
+}
+.date-filter {
+  display: flex;
+  align-items: center;
+}
+
+.dateFor {
+  width: 250px;
+  margin-left: 20px;
+}
+
+.dateWith {
+  width: 250px;
+}
+
+.filter-buttons {
+  font-size: 1.4rem;
+  margin-bottom: 25px;
+  margin-left: 20px;
+}

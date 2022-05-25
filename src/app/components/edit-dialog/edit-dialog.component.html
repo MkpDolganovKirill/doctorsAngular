@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Изменение данных приема</h1>
+<div mat-dialog-content>
+  <form class="edit-form" [formGroup]="editForm">
+    <mat-form-field appearance="outline">
+      <mat-label>ФИО пациента</mat-label>
+      <input formControlName="patient" matInput>
+    </mat-form-field>
+    <mat-form-field class="outlined-input doctor" appearance="outline">
+      <mat-label>Доктор</mat-label>
+      <mat-select #selectDoctor formControlName="doctorId">
+        <mat-option value="">Не выбран</mat-option>
+        <mat-option *ngFor="let doctor of (doctorService?.doctorsList | async)" [value]="doctor.id">
+          {{doctor.fullname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="outlined-input date" appearance="outline">
+      <mat-label>Дата приема</mat-label>
+      <input matInput formControlName="ordersdate" [min]="dateLimit.min" [max]="dateLimit.max" [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Жалобы</mat-label>
+      <input formControlName="complaints" matInput>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Отменить</button>
+  <button mat-button mat-dialog-close (click)="saveChangedValues()" cdkFocusInitial>Сохранить</button>
+</div>

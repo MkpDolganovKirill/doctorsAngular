@@ -10,7 +10,7 @@ export const snackBarNotConnect: ISnackBar = {
   },
 };
 
-export const snackBarExistUser: ISnackBar = {
+export const snackBarNotExistUser: ISnackBar = {
   message: 'Пользователь уже существует',
   action: 'Закрыть',
   optional: {
@@ -25,6 +25,16 @@ export const snackBarUnknownUser: ISnackBar = {
   action: 'Закрыть',
   optional: {
     duration: 100000,
+    verticalPosition: 'top',
+    horizontalPosition: 'right',
+  },
+};
+
+export const snackBarDeletedOrder: ISnackBar = {
+  message: 'Данный прием не существует',
+  action: 'Закрыть',
+  optional: {
+    duration: 3000,
     verticalPosition: 'top',
     horizontalPosition: 'right',
   },

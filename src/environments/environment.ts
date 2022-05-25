@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  requestLink: 'http://localhost:8080/',
+  requestLink: 'http://localhost:8080',
 };
 
 /*

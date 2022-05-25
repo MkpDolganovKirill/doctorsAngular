@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import * as LOCALSTORAGE_DATA from 'src/constants/localstorage-data.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +8,11 @@ import { Observable } from 'rxjs';
 export class AuthGuardsGuard implements CanActivate {
   constructor(private router: Router) {}
 
-  canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    if (!localStorage.getItem('accesstoken') || !localStorage.getItem('refreshtoken')) {
+  canActivate(): boolean {
+    if (
+      !localStorage.getItem(LOCALSTORAGE_DATA.accesstoken) ||
+      !localStorage.getItem(LOCALSTORAGE_DATA.refreshtoken)
+    ) {
       this.router.navigate(['/auth']);
       return false;
     }

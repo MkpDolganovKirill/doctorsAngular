@@ -1,0 +1,32 @@
+@import 'src/styles-variables.scss';
+
+.create-form {
+  padding: 15px 0 0 0;
+  display: flex;
+  height: 10vh;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: $box-shadow-primary;
+}
+
+.creating-button {
+  margin-bottom: 25px;
+  button {
+    height: 60px;
+  }
+}
+.name {
+  width: 20%;
+}
+
+.doctor {
+  width: 20%;
+}
+
+.date {
+  width: 20%;
+}
+
+.complaints {
+  width: 20%;
+}
