@@ -10,7 +10,7 @@ export const snackBarNotConnect: ISnackBar = {
   },
 };
 
-export const snackBarExistUser: ISnackBar = {
+export const snackBarNotExistUser: ISnackBar = {
   message: 'Пользователь уже существует',
   action: 'Закрыть',
   optional: {
